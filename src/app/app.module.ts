@@ -1,17 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, ActivatedRouteSnapshot} from '@angular/router';
-
-// import {
-//   EventsListComponent,
-//   EventThumbnailComponent,
-//   EventService,
-//   EventDetailsComponent,
-//   CreateEventComponent,
-//   EventListResolver
-
-// } from './events/index'
-
+import { AuthService } from 'src/user/auth.service';
 import { EventsAppComponent } from './events-app.component';
 import { NavBarComponent } from './nav/navbar.component';
 import {ToastrService } from './common/toastr.service' 
@@ -47,10 +37,7 @@ import { EventListResolver } from './events/shared/events-list-resolver.service'
      ToastrService,
       EventRouteActivator,
       EventListResolver,
-      // {
-      //    provide: 'canDeactivateCreateEvent',
-      //    useValue: checkDirtyState
-      //   }
+      AuthService
     ],
   bootstrap: [EventsAppComponent]
 })
