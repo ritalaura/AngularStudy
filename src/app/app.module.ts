@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, ActivatedRouteSnapshot} from '@angular/router';
 import { AuthService } from 'src/user/auth.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventsAppComponent } from './events-app.component';
 import { NavBarComponent } from './nav/navbar.component';
 import {ToastrService } from './common/toastr.service' 
@@ -10,7 +11,7 @@ import { Error404Component} from 'src/errors/404.component';
 import { EventRouteActivator } from './events/event-details/event-route-activator.service';
 import { EventsListComponent } from './events/events-list.component';
 import { EventThumbnailComponent } from './events/event.thumbnail.component';
-import { EventDetailsComponent } from './events/event-details';
+import { CreateSessionComponent, EventDetailsComponent } from './events/event-details';
 import { CreateEventComponent } from './events/create-event.component';
 import { EventService } from './events/shared';
 import { EventListResolver } from './events/shared/events-list-resolver.service';
@@ -21,6 +22,8 @@ import { EventListResolver } from './events/shared/events-list-resolver.service'
 @NgModule({
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(appRoutes)
   ],
   declarations: [
@@ -30,14 +33,20 @@ import { EventListResolver } from './events/shared/events-list-resolver.service'
     EventDetailsComponent,
     NavBarComponent,
     CreateEventComponent,
-    Error404Component
+    Error404Component,
+    CreateSessionComponent
   ] ,
   providers: [
     EventService,
      ToastrService,
       EventRouteActivator,
       EventListResolver,
-      AuthService
+      AuthService,
+
+      {
+        provide: 'canDeactivateCreateEvent',
+        useValue: checkDirtyState
+      }
     ],
   bootstrap: [EventsAppComponent]
 })
