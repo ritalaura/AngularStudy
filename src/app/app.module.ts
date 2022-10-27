@@ -10,9 +10,12 @@ import { TOASTR_TOKEN,
          CollapsibleWellComponent,
         SimpleModalComponent, 
         JQ_TOKEN,
-        ModalTriggerDirective} from './common/index'  
+        ModalTriggerDirective
+      } from './common/index'  
+import { LocationValidator } from './events/shared';
+import { VoterService } from './events/event-details';
 import { DurationPipe } from './events/shared';
-
+import { UpvoteComponent } from './events/event-details';
 import { appRoutes } from './routes';
 import { Error404Component} from 'src/errors/404.component';
 import { EventRouteActivator } from './events/event-details/event-route-activator.service';
@@ -51,6 +54,8 @@ let jQuery = window ['$'];
     DurationPipe,
     ModalTriggerDirective,
     SimpleModalComponent, 
+    UpvoteComponent,
+    LocationValidator,
 
 
   ] ,
@@ -61,6 +66,7 @@ let jQuery = window ['$'];
       EventRouteActivator,
       EventListResolver,
       AuthService,
+      VoterService,
 
       {
         provide: 'canDeactivateCreateEvent',

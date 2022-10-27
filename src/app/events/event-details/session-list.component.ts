@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, RendererStyleFlags2 } from "@angular/core";
 import { ISession } from "../shared";
+import { AuthService } from "src/user/auth.service";
+import { VoterService } from "./vote.service";
 
 @Component ({
     selector: 'session-list',
@@ -11,20 +13,35 @@ export class SessionListComponent {
     @Input() filterBy: string;
     @Input() sortBy: string;
 
-    visibleSession: ISession[] = [];
+    visibleSessions: ISession[] = [];
 
+    constructor( public auth: AuthService, private voterService: VoterService){}
   ngOnChanges(){
     if(this.sessions){
         this.filterSessions(this.filterBy);
-        this.sortBy === 'name' ? this.visibleSession.sort(sortByNameAsc) : this.visibleSession.sort(sortByVotesDesc);
+        this.sortBy === 'name' ? this.visibleSessions.sort(sortByNameAsc) : this.visibleSessions.sort(sortByVotesDesc);
     }
   }
+  
+toggleVote(session: ISession){
+    if(this.userHasVoted(session)){
+        this.voterService.deleteVoter(session, this.auth.currentUser.userName);
+    } else {
+        this.voterService.addVoter(session, this.auth.currentUser.userName);
+    } 
+    if(this.sortBy === 'votes')
+    this.visibleSessions.sort(sortByVotesDesc);
+}
+
+userHasVoted(session: ISession){
+return this.voterService.userHasVoted(session, this.auth.currentUser.userName);
+}
 
   filterSessions(filter){
     if(filter === 'all'){
-        this.visibleSession = this.sessions.slice(0);
+        this.visibleSessions = this.sessions.slice(0);
     } else{
-        this.visibleSession = this.sessions.filter(session => {
+        this.visibleSessions = this.sessions.filter(session => {
             return session.level.toLocaleLowerCase() === filter;
         })
     }
