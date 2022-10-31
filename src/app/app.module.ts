@@ -5,6 +5,8 @@ import { AuthService } from 'src/user/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventsAppComponent } from './events-app.component';
 import { NavBarComponent } from './nav/navbar.component';
+import { HttpClientModule } from '@angular/common/http';
+
 import { TOASTR_TOKEN,
         Toastr,
          CollapsibleWellComponent,
@@ -12,20 +14,20 @@ import { TOASTR_TOKEN,
         JQ_TOKEN,
         ModalTriggerDirective
       } from './common/index'  
-import { LocationValidator } from './events/shared';
+import { LocationValidator } from './events';
 import { VoterService } from './events/event-details';
 import { DurationPipe } from './events/shared';
 import { UpvoteComponent } from './events/event-details';
 import { appRoutes } from './routes';
 import { Error404Component} from 'src/errors/404.component';
-import { EventRouteActivator } from './events/event-details/event-route-activator.service';
 import { EventsListComponent } from './events/events-list.component';
 import { EventThumbnailComponent } from './events/event.thumbnail.component';
 import { CreateSessionComponent, EventDetailsComponent } from './events/event-details';
 import { CreateEventComponent } from './events/create-event.component';
 import { EventService } from './events/shared';
-import { EventListResolver } from './events/shared/events-list-resolver.service';
+import { EventListResolver } from './events/events-list-resolver.service';
 import { SessionListComponent } from './events/event-details';
+import { EventResolver } from './events/event-resolver.service';
 
 
 let toastr: Toastr = window ['toastr'];
@@ -38,7 +40,8 @@ let jQuery = window ['$'];
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    HttpClientModule
   ],
   declarations: [
     EventsAppComponent,
@@ -63,7 +66,7 @@ let jQuery = window ['$'];
     EventService,
     { provide: TOASTR_TOKEN, useValue: toastr},
     { provide: JQ_TOKEN, useValue: jQuery},
-      EventRouteActivator,
+      EventResolver,
       EventListResolver,
       AuthService,
       VoterService,
