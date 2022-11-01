@@ -62,7 +62,8 @@ margin-left: 20px;">
 </div>
 </div>
 
-<session-list [sortBy]="sortBy" [filterBy]="filterBy" *ngIf="!addMode" [sessions] ="event?.sessions"></session-list>
+<session-list [eventId]="event?.id" [filterBy]="filterBy" [sortBy]="sortBy"
+ *ngIf="!addMode" [sessions] ="event?.sessions"></session-list>
 <create-session *ngIf="addMode"
 (saveNewSession)="saveNewSession($event)" (cancelAddSession)="cancelAddSession()"></create-session>
   </div>
